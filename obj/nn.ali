@@ -1,0 +1,88 @@
+V "GNAT Lib v2015"
+A -O2
+A -gnatA
+A -mtune=generic
+A -march=pentiumpro
+P ZX
+
+RN
+RV NO_FLOATING_POINT
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U nn%b			nn.adb			74743221 NE OO PK IU
+
+U nn%s			nn.ads			6bfd6741 EE NE OO PK IU
+W mathematics%s		mathematics.adb		mathematics.ali
+
+D ada.ads		20150518132148 3ffc8e18 ada%s
+D a-except.ads		20150518132148 5250cb69 ada.exceptions%s
+D a-ioexce.ads		20150518132148 e4a01f64 ada.io_exceptions%s
+D a-numeri.ads		20150518132148 bb51c45a ada.numerics%s
+D a-nuflra.ads		20150518132148 49c50e0b ada.numerics.float_random%s
+D a-stream.ads		20150518132148 119b8fb3 ada.streams%s
+D a-tags.ads		20150518132148 dc4d0634 ada.tags%s
+D a-textio.ads		20150518132148 386df5d4 ada.text_io%s
+D a-unccon.ads		20150518132148 f9eb8f06 ada.unchecked_conversion%s
+D interfac.ads		20150518132148 6033a23f interfaces%s
+D i-cstrea.ads		20150518132148 e53d8b8e interfaces.c_streams%s
+D mathematics.ads	20160120184920 5932f95c mathematics%s
+D nn.ads		20160120212608 32cf9e1d nn%s
+D nn.adb		20160120212616 46bbac3c nn%b
+D system.ads		20150518132150 f4ce8c3a system%s
+D s-crtl.ads		20150518132148 0ebbdb71 system.crtl%s
+D s-exctab.ads		20150518132148 54135002 system.exception_table%s
+D s-ficobl.ads		20150518132148 078245e4 system.file_control_block%s
+D s-parame.ads		20150518132150 7e2a0d7f system.parameters%s
+D s-rannum.ads		20150518132150 99ade2f2 system.random_numbers%s
+D s-soflin.ads		20150518132150 aa763b52 system.soft_links%s
+D s-stache.ads		20150518132150 a37c21ec system.stack_checking%s
+D s-stalib.ads		20150518132150 fa0a3617 system.standard_library%s
+D s-stoele.ads		20150518132150 2dc34a04 system.storage_elements%s
+D s-traent.ads		20150518132150 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20150518132150 9d58a4c0 system.unsigned_types%s
+D s-wchcon.ads		20150518132150 1b7d22d2 system.wch_con%s
+X 12 mathematics.ads
+4K9*Mathematics 39e16 13|1w6 1r23
+10V13*Tanh{float} 14|5s14
+14V13*Tanh_Derivative_Reuse{float} 14|10s14
+19A9*Vector(float)<integer> 13|5r28 5r56 7r29 7r48 13r46 13r58 13r79 15r28
+. 15r63 14|13r28 13r56 20r29 20r48 28r46 28r58 28r79 36r28 36r63
+20A9*Matrix(float)<integer><integer> 13|5r40 13r34 15r50 14|13r40 28r34 36r50
+22V13*Dot1{float} 14|16s31
+25V13*Dot2{float} 14|31s62
+X 13 nn.ads
+3K9*NN 17l5 17e7 14|1b14 48l5 48t7
+5U14*Forward 5>24 5>36 5<48 14|13b14 18t7
+5a24 X{12|19A9} 14|13b24 16r40
+5a36 W{12|20A9} 14|13b36 15r16 16r37
+5a48 Y{12|19A9} 14|13b48 16m10
+7U14*Error 7>22 7>25 7<37 7<40 14|20b14 26t7
+7a22 T{12|19A9} 14|20b22 23r19
+7a25 Y{12|19A9} 14|20b25 23r27 24r48
+7a37 E{12|19A9} 14|20b37 23m10 24r57
+7a40 D{12|19A9} 14|20b40 22r16 24m10
+13U14*Backpropagate 13>30 13>42 13>54 13<66 14|28b14 33t7
+13a30 W{12|20A9} 14|28b30 30r16 31r68
+13a42 D{12|19A9} 14|28b42 31r71
+13a54 Y{12|19A9} 14|28b54 31r53
+13a66 Result{12|19A9} 14|28b66 31m10
+15U14*Adjust 15>23 15=36 15=39 15>58 15>71 15>75 14|36b14 46l8 46t14
+15a23 Y1{12|19A9} 14|36b23 41r27
+15a36 W{12|20A9} 14|36b36 39r16 40r19 42m13 42r25
+15a39 M{12|20A9} 14|36b39 42r53 43m13
+15a58 D2{12|19A9} 14|36b58 41r18
+15f71 LR{float} 14|36b71 42r37
+15f75 MR{float} 14|36b75 42r48
+X 14 nn.adb
+3V13 Activation{float} 3b13 3>25 6t7 16s19
+3f25 X{float} 5r20
+8V13 Activation_Derivative_Reuse{float} 8b13 8>42 11t7 24s19 31s24
+8f42 X{float} 10r37
+15i11 I{integer} 16r13 16r43
+22i11 I{integer} 23r13 23r22 23r30 24r13 24r51 24r60
+30i11 I{integer} 31r18 31r56 31r74
+37f7 C{float} 41m13 42r42 43r25
+39i11 I{integer} 41r31 42r16 42r28 42r56 43r16
+40i14 J{integer} 41r22 42r19 42r31 42r59 43r19
+

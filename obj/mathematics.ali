@@ -1,0 +1,179 @@
+V "GNAT Lib v2015"
+A -O2
+A -gnatA
+A -mtune=generic
+A -march=pentiumpro
+P ZX
+
+RN
+RV NO_DIRECT_BOOLEAN_OPERATORS
+RV NO_FLOATING_POINT
+RV NO_IO
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U mathematics%b		mathematics.adb		f88e169d NE OO PK
+W ada%s			ada.ads			ada.ali
+W ada.float_text_io%s	a-flteio.ads		a-flteio.ali
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+W ada.numerics.elementary_functions%s  a-nuelfu.ads  a-nuelfu.ali
+W ada.numerics.float_random%s  a-nuflra.adb	a-nuflra.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+
+U mathematics%s		mathematics.ads		289a0283 EE NE OO PK
+W ada%s			ada.ads			ada.ali
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+W ada.numerics.float_random%s  a-nuflra.adb	a-nuflra.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+
+D ada.ads		20150518132148 3ffc8e18 ada%s
+D a-except.ads		20150518132148 5250cb69 ada.exceptions%s
+D a-flteio.ads		20150518132148 e18a47a0 ada.float_text_io%s
+D a-ioexce.ads		20150518132148 e4a01f64 ada.io_exceptions%s
+D a-numeri.ads		20150518132148 bb51c45a ada.numerics%s
+D a-nuelfu.ads		20150518132148 03e83d1c ada.numerics.elementary_functions%s
+D a-nuflra.ads		20150518132148 49c50e0b ada.numerics.float_random%s
+D a-ngelfu.ads		20150518132148 b8fdcb46 ada.numerics.generic_elementary_functions%s
+D a-stream.ads		20150518132148 119b8fb3 ada.streams%s
+D a-tags.ads		20150518132148 dc4d0634 ada.tags%s
+D a-textio.ads		20150518132148 386df5d4 ada.text_io%s
+D a-tiflio.ads		20150518132148 56fbda09 ada.text_io.float_io%s
+D a-unccon.ads		20150518132148 f9eb8f06 ada.unchecked_conversion%s
+D interfac.ads		20150518132148 6033a23f interfaces%s
+D i-cstrea.ads		20150518132148 e53d8b8e interfaces.c_streams%s
+D mathematics.ads	20160120184920 5932f95c mathematics%s
+D mathematics.adb	20160120184944 8927aaf8 mathematics%b
+D system.ads		20150518132150 f4ce8c3a system%s
+D s-crtl.ads		20150518132148 0ebbdb71 system.crtl%s
+D s-exctab.ads		20150518132148 54135002 system.exception_table%s
+D s-ficobl.ads		20150518132148 078245e4 system.file_control_block%s
+D s-parame.ads		20150518132150 7e2a0d7f system.parameters%s
+D s-rannum.ads		20150518132150 99ade2f2 system.random_numbers%s
+D s-soflin.ads		20150518132150 aa763b52 system.soft_links%s
+D s-stache.ads		20150518132150 a37c21ec system.stack_checking%s
+D s-stalib.ads		20150518132150 fa0a3617 system.standard_library%s
+D s-stoele.ads		20150518132150 2dc34a04 system.storage_elements%s
+D s-traent.ads		20150518132150 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20150518132150 9d58a4c0 system.unsigned_types%s
+D s-wchcon.ads		20150518132150 1b7d22d2 system.wch_con%s
+X 1 ada.ads
+16K9*Ada 19e8 16|1r6 1r37 2r6 2r23 17|1r6 1r24 2r6 2r45 3r6 3r37 5r6 6r6
+. 109r11 110r11 120r11 121r11 132r11 133r11
+X 3 a-flteio.ads
+20K13*Float_Text_IO[12|46] 17|6w10 110r15 121r15 133r15
+X 5 a-numeri.ads
+16K13*Numerics 32e17 16|1r10 1r41 17|1w10 1r28 2r10 2r49 3r10 3r41
+29N4*e 17|14r41 19r27
+X 6 a-nuelfu.ads
+18K22*Elementary_Functions[8|39] 17|2w19 2r58 33r48
+X 7 a-nuflra.ads
+41K22*Float_Random 72e30 16|1w19 1r50 17|3w19 3r50
+45R9*Generator<23|63R9> 16|27r26 28r26 29r27 30r27 32r27 33r27 17|69r26 74r26
+. 79r27 88r27 93r27 100r27
+47F12*Uniformly_Distributed{float}
+49V13*Random{47F12}<23|71p13> 17|71s26
+X 8 a-ngelfu.ads
+74V14*"**"{float} 17|14s43[6|18] 14s56[6|18] 19s29[6|18]
+152V13*Tanh{float} 17|33s69[6|18]
+X 11 a-textio.ads
+49K13*Text_IO 471e16 16|2w10 2r27 17|5w10 109r15 120r15 132r15
+73I12*Field{integer} 16|36r38 36r51 36r64 37r38 37r51 37r64 17|108r51 108r64
+. 108r77 119r38 119r51 119r64 131r38 131r51 131r64
+166U14*New_Line 17|127s10
+242U14*Put 17|113s10
+X 12 a-tiflio.ads
+68U14*Put 17|115s7[3|20] 125s13[3|20] 136s10[3|20]
+X 16 mathematics.ads
+4K9*Mathematics 39l5 39e16 17|10b14 140l5 140t16
+6V13*Sigmoid{float} 6>23 17|17b13 20t7 23s20
+6f23 X{float} 17|17b23 19r34
+7V13*Sigmoid_Derivative{float} 7>34 17|22b13 26t7
+7f34 X{float} 17|22b34 23r28
+8V13*Sigmoid_Derivative_Reuse{float} 8>40 17|28b13 31t7
+8f40 X{float} 17|28b40 30r14 30r25
+10V13*Tanh{float} 10>20 17|33b13 37s21
+10f20 X{float} 17|33r74
+11V13*Tanh_Derivative{float} 11>31 17|35b13 38t7
+11f31 X{float} 17|35b31 37r26
+14V13*Tanh_Derivative_Reuse{float} 14>37 17|41b13 44t7
+14f37 X{float} 17|41b37 43r21
+16V13*Map{float} 16>19 16>22 16>26 16>30 16>34 17|46b13 49t7
+16f19 X{float} 17|46b19 48r15
+16f22 X1{float} 17|46b22 48r19 48r43
+16f26 X2{float} 17|46b26 48r38
+16f30 Y1{float} 17|46b30 48r31 48r49
+16f34 Y2{float} 17|46b34 48r26
+19A9*Vector(float)<integer> 22r36 25r36 32r62 33r58 37r23 17|51r36 60r36
+. 93r62 100r58 131r23
+20A9*Matrix(float)<integer><integer> 22r24 25r24 29r62 30r58 36r23 17|51r24
+. 60r24 79r62 88r58 119r23
+22V13*Dot1{float} 22>20 22>32 22>44 17|51b13 58t7
+22a20 A{20A9} 23r22 23r48 17|51b20 54r17 55r28
+22a32 X{19A9} 23r11 23r38 17|51b32 55r19
+22i44 I2{positive} 17|51b44 55r35
+25V13*Dot2{float} 25>20 25>32 25>44 17|60b13 67t7
+25a20 A{20A9} 17|60b20 63r17 64r28
+25a32 X{19A9} 17|60b32 64r19
+25i44 I1{positive} 17|60b44 64r31
+27V13*Random{float} 27>22 27>37 27>41 17|69b13 72l8 72t14 76s14 83s27 96s19
+. 103s19
+27r22 G{7|45R9} 17|69b22 71r34
+27f37 X1{float} 17|69b37 71r20 71r39
+27f41 X2{float} 17|69b41 71r15
+28V13*Random{float} 28>22 28>37 17|74b13 77l8 77t14
+28r22 G{7|45R9} 17|74b22 76r22
+28f37 X1{float} 17|74b37 76r26 76r30
+29U14*Random 29>23 29>38 29>42 29<54 17|79b14 86t7 90s7
+29r23 G{7|45R9} 17|79b23 83r35
+29f38 X1{float} 17|79b38 83r38
+29f42 X2{float} 17|79b42 83r42
+29a54 A{20A9} 17|79b54 81r17 82r20 83m13
+30U14*Random 30>23 30>38 30<50 17|88b14 91t7
+30r23 G{7|45R9} 17|88b23 90r15
+30f38 X1{float} 17|88b38 90r19 90r23
+30a50 A{20A9} 17|88b50 90m27
+32U14*Random 32>23 32>38 32>42 32<54 17|93b14 98t7
+32r23 G{7|45R9} 17|93b23 96r27
+32f38 X1{float} 17|93b38 96r30
+32f42 X2{float} 17|93b42 96r34
+32a54 X{19A9} 17|93b54 95r16 96m10
+33U14*Random 33>23 33>38 33<50 17|100b14 105t7
+33r23 G{7|45R9} 17|100b23 103r27
+33f38 X1{float} 17|100b38 103r31 103r35
+33a50 X{19A9} 17|100b50 102r16 103m10
+36U14*Put 36>19 36>31 36>45 36>58 17|119b14 129t7
+36a19 A{20A9} 17|119b19 123r16 124r19 125r18
+36i31 Fore{11|73I12} 17|119b31 125r27
+36i45 Aft{11|73I12} 17|119b45 125r33
+36i58 Exp{11|73I12} 17|119b58 125r38
+37U14*Put 37>19 37>31 37>45 37>58 17|131b14 138t7
+37a19 A{19A9} 17|131b19 135r16 136r15
+37i31 Fore{11|73I12} 17|131b31 136r22
+37i45 Aft{11|73I12} 17|131b45 136r28
+37i58 Exp{11|73I12} 17|131b58 136r33
+X 17 mathematics.adb
+12V13 Logistic{float} 12b13 12>24 12>27 12>30 12>33 12>36 12>39 15t7
+12f24 X{float} 14r52
+12f27 A{float} 14r14 14r24
+12f30 K{float} 14r20
+12f33 B{float} 14r48
+12f36 V{float} 14r66
+12f39 Q{float} 14r37
+23f7 A{float} 25r14 25r25
+52f7 Y{float} 55m10 55r15 57r14
+54i11 I1{integer} 55r22 55r31
+61f7 Y{float} 64m10 64r15 66r14
+63i11 I2{integer} 64r22 64r35
+81i11 I1{integer} 83r16
+82i14 I2{integer} 83r20
+95i11 I{integer} 96r13
+102i11 I{integer} 103r13
+108U14 Put_Sign_Space 108b14 108>30 108>44 108>58 108>71 116t7
+108f30 Item{float} 112r10 115r12
+108i44 Fore{11|73I12} 115r18
+108i58 Aft{11|73I12} 115r24
+108i71 Exp{11|73I12} 115r29
+123i11 I{integer} 125r21
+124i14 J{integer} 125r23
+135i11 I{integer} 136r18
+

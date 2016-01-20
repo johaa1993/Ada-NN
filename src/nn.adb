@@ -1,78 +1,48 @@
-with Ada.Numerics.Generic_Elementary_Functions;
-with Ada.Numerics.Float_Random;
-
 package body NN is
 
-   function Sigmoid(X : Float) return Float is
-      package Math is new Ada.Numerics.Generic_Elementary_Functions(Float); use Math;
-      e : constant Float := 2.7;
+   function Activation (X : Float) return Float is
    begin
-      return 1.0 / (1.0 + e**(-X));
+      return Tanh (X);
    end;
 
-   function Sigmoid_Derivative (X : Float) return Float is
+   function Activation_Derivative_Reuse (X : Float) return Float is
    begin
-      return Sigmoid(X) * (1.0 - Sigmoid(X));
+      return Tanh_Derivative_Reuse (X);
+   end;
+
+   procedure Forward ( X : Vector; W : Matrix; Y : out Vector ) is
+   begin
+      for I in W'Range (2) loop
+         Y (I) := Activation (Dot1 (W, X, I));
+      end loop;
+   end;
+
+   procedure Error ( T, Y : Vector; E, D : out Vector ) is
+   begin
+      for I in D'Range loop
+         E (I) := T (I) - Y (I);
+         D (I) := Activation_Derivative_Reuse (Y (I)) * E (I);
+      end loop;
+   end;
+
+   procedure Backpropagate ( W : Matrix; D : Vector; Y : Vector; Result : out Vector) is
+   begin
+      for I in W'Range (1) loop
+         Result (I) := Activation_Derivative_Reuse (Y (I)) * Dot2 (W, D, I);
+      end loop;
    end;
 
 
-   procedure Forward ( X : Float_Array; W : Weight_Matrix; L : out Layer ) is
+   procedure Adjust ( Y1 : Vector; W, M : in out Matrix; D2 : Vector; LR, MR : Float) is
+      C : Float;
    begin
-      for I in 1 .. L.N loop
-         L.S (I) := 0.0;
-         for J in X'Range loop
-            L.S (I) := L.S (I) + X (J) * W (J, I);
-         end loop;
-         L.Y (I) := Sigmoid ( L.S (I) );
-         L.Z (I) := Sigmoid_Derivative ( L.S (I) );
-      end loop;
-   end Forward;
-
-   procedure Forward ( A : Layer; W : Weight_Matrix; B : out Layer ) is
-   begin
-      Forward (A.Y, W, B);
-   end;
-
-   procedure Backpropagation ( A : out Layer; W : Weight_Matrix; B : Layer ) is
-   begin
-      for I in 1 .. A.N loop
-         A.D (I) := 0.0;
-         for J in 1 .. B.N loop
-            A.D (I) := A.D (I) + B.D (J) * W (I, J);
-         end loop;
-      end loop;
-   end Backpropagation;
-
-   procedure Adjust ( X : Float_Array; W : in out Weight_Matrix; B : Layer ) is
-      D : Float;
-      Z : Float;
-   begin
-      for I in 1 .. B.N loop
-         D := B.D (I);
-         Z := B.Z (I);
-         for J in X'Range loop
-            W (J, I) := W (J, I) + Learning_Rate * D * Z * X (J);
-         end loop;
-      end loop;
-   end Adjust;
-
-   procedure Adjust ( A : Layer; W : in out Weight_Matrix; B : Layer ) is
-   begin
-      Adjust (A.Y, W, B);
-   end Adjust;
-
-
-   procedure Random ( W : out Weight_Matrix ) is
-      use Ada.Numerics.Float_Random;
-      G : Generator;
-   begin
-      Reset (G);
-      for I in W'Range(1) loop
+      for I in W'Range (1) loop
          for J in W'Range (2) loop
-            W (I, J) := Random(G);
+            C := D2 (J) * Y1 (I);
+            W (I, J) := W (I, J) + (LR * C) + (MR * M (I, J));
+            M (I, J) := C;
          end loop;
       end loop;
-   end Random;
-
+   end Adjust;
 
 end NN;
