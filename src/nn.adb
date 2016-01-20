@@ -25,25 +25,33 @@ package body NN is
       end loop;
    end;
 
-   procedure Backpropagate ( W : Matrix; D : Vector; Y : Vector; Result : out Vector) is
+   procedure Backpropagate ( W : Matrix; D : Vector; Y : Vector; R : out Vector) is
    begin
       for I in W'Range (1) loop
-         Result (I) := Activation_Derivative_Reuse (Y (I)) * Dot2 (W, D, I);
+         R (I) := Activation_Derivative_Reuse (Y (I)) * Dot2 (W, D, I);
       end loop;
    end;
 
 
-   procedure Adjust ( Y1 : Vector; W, M : in out Matrix; D2 : Vector; LR, MR : Float) is
-      -- C : Float;
+   procedure Adjust (LR, MR : Float; X : Vector; D : Vector; W, M : in out Matrix) is
    begin
       for I in W'Range (1) loop
          for J in W'Range (2) loop
-            -- C := D2 (J) * Y1 (I);
-            -- W (I, J) := W (I, J) + (LR * C) + (MR * M (I, J));
-            M (I, J) := (LR * D2 (J) * Y1 (I)) + (MR * M (I, J));
+            M (I, J) := (LR * D (J) * X (I)) + (MR * M (I, J));
             W (I, J) := W (I, J) + M (I, J);
          end loop;
       end loop;
    end Adjust;
+
+   procedure Adjust_2 (Learning_Rate, Momemtum_Rate : Float; Input : Vector; Error : Vector; W, M : in out Matrix) is
+   begin
+      for I in W'Range (1) loop
+         for J in W'Range (2) loop
+            M (I, J) := (Learning_Rate * Error (J) * Input (I)) + (Momemtum_Rate * M (I, J));
+            W (I, J) := W (I, J) + M (I, J);
+         end loop;
+      end loop;
+   end;
+
 
 end NN;

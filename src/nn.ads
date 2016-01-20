@@ -7,11 +7,20 @@ package NN is
    procedure Error ( T, Y : Vector; E, D : out Vector );
 
    -- W is the net.
-   -- D is delta error for Y.
+   -- D is delta error result from W.
    -- Y is input value for net W.
-   -- Result is delta error for previus layer.
-   procedure Backpropagate ( W : Matrix; D : Vector; Y : Vector; Result : out Vector);
+   -- R is delta error for previus layer.
+   procedure Backpropagate ( W : Matrix; D : Vector; Y : Vector; R : out Vector);
 
-   procedure Adjust ( Y1 : Vector; W, M : in out Matrix; D2 : Vector; LR, MR : Float);
+
+   -- LR is learning rate.
+   -- MR is Momentum rate.
+   -- X is input.
+   -- D is delta error.
+   -- W is net.
+   -- M is momentum.
+   procedure Adjust (LR, MR : Float; X : Vector; D : Vector; W, M : in out Matrix);
+
+   procedure Adjust_2 (Learning_Rate, Momemtum_Rate : Float; Input : Vector; Error : Vector; W, M : in out Matrix);
 
 end NN;

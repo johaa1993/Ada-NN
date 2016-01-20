@@ -71,8 +71,8 @@ begin
          New_Line;
 
          Backpropagate (W2, D2, Y1, D1);
-         Adjust (Correlation_Array (I).Input, W1, M1, D1, 0.03, 0.9);
-         Adjust (Y1, W2, M2, D2, 0.3, 0.1);
+         Adjust (0.03, 0.9, Correlation_Array (I).Input, D1, W1, M1);
+         Adjust (0.3, 0.1, Y1, D2, W2, M2);
       end loop;
       Put (W1, 3, 2, 0);
       New_Line;
