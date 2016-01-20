@@ -34,13 +34,14 @@ package body NN is
 
 
    procedure Adjust ( Y1 : Vector; W, M : in out Matrix; D2 : Vector; LR, MR : Float) is
-      C : Float;
+      -- C : Float;
    begin
       for I in W'Range (1) loop
          for J in W'Range (2) loop
-            C := D2 (J) * Y1 (I);
-            W (I, J) := W (I, J) + (LR * C) + (MR * M (I, J));
-            M (I, J) := C;
+            -- C := D2 (J) * Y1 (I);
+            -- W (I, J) := W (I, J) + (LR * C) + (MR * M (I, J));
+            M (I, J) := (LR * D2 (J) * Y1 (I)) + (MR * M (I, J));
+            W (I, J) := W (I, J) + M (I, J);
          end loop;
       end loop;
    end Adjust;

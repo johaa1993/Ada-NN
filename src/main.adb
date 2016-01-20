@@ -37,8 +37,8 @@ begin
 
    Reset (G);
 
-   Random (G, 0.3, W1);
-   Random (G, 0.3, W2);
+   Random (G, 0.1, W1);
+   Random (G, 0.1, W2);
 
    Put (W1, 3, 2, 0);
    New_Line;
@@ -71,7 +71,7 @@ begin
          New_Line;
 
          Backpropagate (W2, D2, Y1, D1);
-         Adjust (Correlation_Array (I).Input, W1, M1, D1, 0.2, 0.8);
+         Adjust (Correlation_Array (I).Input, W1, M1, D1, 0.03, 0.9);
          Adjust (Y1, W2, M2, D2, 0.3, 0.1);
       end loop;
       Put (W1, 3, 2, 0);
