@@ -32,13 +32,13 @@ procedure Main is
    Correlation_Array : State_Array := (((1.0, 1.0), (1 => 0.0)), ((0.0, 1.0), (1 => 1.0)), ((0.0, 0.0), (1 => 0.0)), ((1.0, 0.0), (1 => 1.0)));
 
    C : Character;
-
+   Iteration : Natural := Natural'First;
 begin
 
    Reset (G);
 
-   Random (G, 0.1, W1);
-   Random (G, 0.1, W2);
+   Random (G, 3.1, W1);
+   Random (G, 3.1, W2);
 
    Put (W1, 3, 2, 0);
    New_Line;
@@ -46,6 +46,8 @@ begin
    New_Line;
 
    loop
+      Put (Head ("  Iteration", 20));
+      Put ("|");
       Put (Head ("  Output", 20));
       Put ("|");
       Put (Head ("  Expected Output", 20));
@@ -57,10 +59,13 @@ begin
       Get_Immediate (C);
 
       for I in Correlation_Array'Range loop
+         Iteration := Natural'Succ (Iteration);
          Forward (Correlation_Array (I).Input, W1, Y1);
          Forward (Y1, W2, Y2);
          Error (Correlation_Array (I).Output, Y2, E2, D2);
 
+         Put (Iteration, 20);
+         Put ("|");
          Put (Y2, 3, 16, 0);
          Put ("|");
          Put (Correlation_Array (I).Output, 3, 16, 0);
@@ -71,8 +76,9 @@ begin
          New_Line;
 
          Backpropagate (W2, D2, Y1, D1);
-         Adjust (0.03, 0.9, Correlation_Array (I).Input, D1, W1, M1);
-         Adjust (0.3, 0.1, Y1, D2, W2, M2);
+         Adjust (0.06, 0.45, 0.000, Correlation_Array (I).Input, D1, W1, M1);
+         Adjust (0.06, 0.45, 0.000, Y1, D2, W2, M2);
+
       end loop;
       Put (W1, 3, 2, 0);
       New_Line;

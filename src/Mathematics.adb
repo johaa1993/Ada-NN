@@ -16,7 +16,7 @@ package body Mathematics is
 
    function Sigmoid ( X : Float ) return Float is
    begin
-      return 1.0 / (1.0 + e ** (-X));
+      return 1.0 / (1.0 + Exp (-X));
    end;
 
    function Sigmoid_Derivative ( X : Float ) return Float is

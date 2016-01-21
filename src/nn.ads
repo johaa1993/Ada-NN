@@ -19,8 +19,7 @@ package NN is
    -- D is delta error.
    -- W is net.
    -- M is momentum.
-   procedure Adjust (LR, MR : Float; X : Vector; D : Vector; W, M : in out Matrix);
+   procedure Adjust (LR, MR, DR : Float; X : Vector; D : Vector; W, M : in out Matrix);
 
-   procedure Adjust_2 (Learning_Rate, Momemtum_Rate : Float; Input : Vector; Error : Vector; W, M : in out Matrix);
 
 end NN;

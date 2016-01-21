@@ -2,12 +2,14 @@ package body NN is
 
    function Activation (X : Float) return Float is
    begin
-      return Tanh (X);
+      return Sigmoid (X);
+      --return Tanh (X);
    end;
 
    function Activation_Derivative_Reuse (X : Float) return Float is
    begin
-      return Tanh_Derivative_Reuse (X);
+      return Sigmoid_Derivative_Reuse (X);
+      --return Tanh_Derivative_Reuse (X);
    end;
 
    procedure Forward ( X : Vector; W : Matrix; Y : out Vector ) is
@@ -33,25 +35,27 @@ package body NN is
    end;
 
 
-   procedure Adjust (LR, MR : Float; X : Vector; D : Vector; W, M : in out Matrix) is
+   procedure Adjust_T (LR, MR, DR : Float; X : Vector; D : Vector; W, M : in out Matrix) is
    begin
       for I in W'Range (1) loop
          for J in W'Range (2) loop
-            M (I, J) := (LR * D (J) * X (I)) + (MR * M (I, J));
-            W (I, J) := W (I, J) + M (I, J);
-         end loop;
-      end loop;
-   end Adjust;
-
-   procedure Adjust_2 (Learning_Rate, Momemtum_Rate : Float; Input : Vector; Error : Vector; W, M : in out Matrix) is
-   begin
-      for I in W'Range (1) loop
-         for J in W'Range (2) loop
-            M (I, J) := (Learning_Rate * Error (J) * Input (I)) + (Momemtum_Rate * M (I, J));
+            M (I, J) := (MR * M (I, J)) + (LR * D (J) * X (I));
             W (I, J) := W (I, J) + M (I, J);
          end loop;
       end loop;
    end;
 
+
+   procedure Adjust (LR, MR, DR : Float; X : Vector; D : Vector; W, M : in out Matrix) is
+      C : Float;
+   begin
+      for I in W'Range (1) loop
+         for J in W'Range (2) loop
+            C := D (J) * X (I);
+            W (I, J) := W (I, J) + (LR * C) + (MR * M (I, J));
+            M (I, J) := C;
+         end loop;
+      end loop;
+   end;
 
 end NN;
