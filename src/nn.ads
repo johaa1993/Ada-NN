@@ -1,25 +1,44 @@
-with Mathematics; use Mathematics;
+with Ada.Numerics;
+with Ada.Numerics.Float_Random;
+
 
 package NN is
 
-   procedure Forward ( X : Vector; W : Matrix; Y : out Vector );
+   subtype Generator is Ada.Numerics.Float_Random.Generator;
 
-   procedure Error ( T, Y : Vector; E, D : out Vector );
+   type Nodation is new Float;
+   type Weight is new Float;
+   type Descent is new Float;
+   type Net is array (Integer range <>, Integer range <>) of Weight;
+   type Gradient is array (Integer range <>) of Descent;
+   type Layer is array (Integer range <>) of Nodation;
 
-   -- W is the net.
-   -- D is delta error result from W.
-   -- Y is input value for net W.
-   -- R is delta error for previus layer.
-   procedure Backpropagate ( W : Matrix; D : Vector; Y : Vector; R : out Vector);
+   procedure Randomize (G : Generator; A, B : Weight; W : out Net);
+
+   generic
+      with function Activate (X : Float) return Float;
+   function Forward_Single (X : Layer; W : Net; I : Integer) return Nodation;
+
+   generic
+      with function Activate (X : Float) return Float;
+   procedure Forward (X : Layer; W : Net; Y : out Layer);
+
+   generic
+      with function Activate (X : Float) return Float;
+   function Backpropagate_Single (D : Gradient; W : Net; A : Layer; I : Integer) return Descent;
+
+   generic
+      with function Activate (X : Float) return Float;
+   procedure Backpropagate (D : Gradient; W : Net; A : Layer; R : out Gradient);
+
+   procedure Adjust (LR : Float; MR : Float; DR : Float; X : Layer; D : Gradient; W : in out Net; M : in out Net);
+
+   generic
+      with function Activate (X : Float) return Float;
+   procedure Error (T : Layer; Y : Layer; E : out Layer; D : out Gradient);
 
 
-   -- LR is learning rate.
-   -- MR is Momentum rate.
-   -- X is input.
-   -- D is delta error.
-   -- W is net.
-   -- M is momentum.
-   procedure Adjust (LR, MR, DR : Float; X : Vector; D : Vector; W, M : in out Matrix);
-
+   function Activate_Tanh (X : Float) return Float;
+   function Activate_Tanh_Derivative (X : Float) return Float;
 
 end NN;

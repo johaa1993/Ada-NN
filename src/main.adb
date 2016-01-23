@@ -1,44 +1,70 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Float_Text_IO; use Ada.Float_Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
-with Ada.Numerics.Float_Random; use Ada.Numerics.Float_Random;
+with Ada.Numerics.Float_Random;
 with Ada.Strings; use Ada.Strings;
 with Ada.Strings.Fixed; use Ada.Strings.Fixed;
-
-with NN; use NN;
+with Ada.Numerics.Discrete_Random;
+with Ada.Numerics.Float_Random;
 with Mathematics; use Mathematics;
+with NN; use NN;
 
 procedure Main is
+   type State_Index is new Integer range 1 .. 4;
+
+   package Random_States is new Ada.Numerics.Discrete_Random (State_Index);
 
    G : Generator;
-   W1 : Matrix (1 .. 2, 1 .. 2);
-   M1 : Matrix (1 .. 2, 1 .. 2) := (others => (others => 0.0));
-   Y1 : Vector (1 .. 2);
-   D1 : Vector (1 .. 2);
+   G2 : Random_States.Generator;
+   W1 : Net (1 .. 2, 1 .. 2);
+   M1 : Net (1 .. 2, 1 .. 2) := (others => (others => 0.0));
+   Y1 : Layer (1 .. 2);-- := (3 => 1.0, others => 0.0);
+   D1 : Gradient (1 .. 2);
 
-   W2 : Matrix (1 .. 2, 1 .. 1);
-   M2 : Matrix (1 .. 2, 1 .. 1) := (others => (others => 0.0));
-   Y2 : Vector (1 .. 1);
-   D2 : Vector (1 .. 1);
-   E2 : Vector (1 .. 1);
+   W2 : Net (1 .. 2, 1 .. 1);
+   M2 : Net (1 .. 2, 1 .. 1) := (others => (others => 0.0));
+   Y2 : Layer (1 .. 1);
+   D2 : Gradient (1 .. 1);
+   E2 : Layer (1 .. 1);
 
    type State is record
-      Input : Vector (1 .. 2);
-      Output : Vector (1 .. 1);
+      Input : Layer (1 .. 2);
+      Output : Layer (1 .. 1);
    end record;
 
-   type State_Array is array (Integer range <>) of State;
+   type State_Array is array (State_Index) of State;
 
-   Correlation_Array : State_Array := (((1.0, 1.0), (1 => 0.0)), ((0.0, 1.0), (1 => 1.0)), ((0.0, 0.0), (1 => 0.0)), ((1.0, 0.0), (1 => 1.0)));
+
+   Correlation_Array : State_Array :=
+     (
+        ((1.0, 1.0), (1 =>  0.0)),
+      ((0.0, 1.0), (1 => 1.0)),
+      ((0.0, 0.0), (1 =>  0.0)),
+      ((1.0, 0.0), (1 => 1.0))
+     );
+   --Correlation_Array : State_Array := (((1.0, 1.0), (1 => -1.0)), ((-1.0, 1.0), (1 => 1.0)), ((-1.0, -1.0), (1 => -1.0)), ((1.0, -1.0), (1 => 1.0)));
+   --Correlation_Array : State_Array := (((1.0, 1.0, 1.0), (1 => 0.0)), ((-1.0, 1.0, 1.0), (1 => 1.0)), ((-1.0, -1.0, 1.0), (1 => 0.0)), ((1.0, -1.0, 1.0), (1 => 1.0)));
+
+
+   procedure Forward is new NN.Forward (NN.Activate_Tanh);
+   procedure Backpropagate is new NN.Backpropagate (NN.Activate_Tanh_Derivative);
+   procedure Error is new NN.Error (NN.Activate_Tanh_Derivative);
+   procedure Put is new Mathematics.Put_Matrix (Integer, NN.Weight, NN.Net);
+   procedure Put is new Mathematics.Put_Vector (Integer, NN.Nodation, NN.Layer);
+   procedure Put is new Mathematics.Put_Vector (Integer, NN.Descent, NN.Gradient);
 
    C : Character;
    Iteration : Natural := Natural'First;
+   --I : State_Index;
+   N : Natural := 0;
 begin
+   Ada.Numerics.Float_Random.Reset (G, 1000);
 
-   Reset (G);
+   --Put (Sigmoid_Derivative_Reuse (1.0), 3, 3, 0);
+   --loop null; end loop;
 
-   Random (G, 3.1, W1);
-   Random (G, 3.1, W2);
+   NN.Randomize (G, -0.1, 0.1, W1);
+   NN.Randomize (G, -0.1, 0.1, W2);
 
    Put (W1, 3, 2, 0);
    New_Line;
@@ -58,8 +84,34 @@ begin
       New_Line;
       Get_Immediate (C);
 
-      for I in Correlation_Array'Range loop
-         Iteration := Natural'Succ (Iteration);
+      case C is
+         when 'r' =>
+            NN.Randomize (G, -0.1, 0.1, W1);
+            NN.Randomize (G, -0.1, 0.1, W2);
+            N := 0;
+         when '1' =>
+            N := 1;
+         when '2' =>
+            N := 10;
+         when others =>
+            N := 0;
+      end case;
+
+      for J in 1 .. N loop
+         --I := Random_States.Random (G2);
+         for I in State_Index loop
+            Iteration := Natural'Succ (Iteration);
+            Forward (Correlation_Array (I).Input, W1, Y1);
+            Forward (Y1, W2, Y2);
+            Error (Correlation_Array (I).Output, Y2, E2, D2);
+            Backpropagate (D2, W2, Y1, D1);
+            Adjust (0.01, 0.0, 0.000, Correlation_Array (I).Input, D1, W1, M1);
+            Adjust (0.01, 0.0, 0.000, Y1, D2, W2, M2);
+         end loop;
+      end loop;
+
+
+      for I in State_Index loop
          Forward (Correlation_Array (I).Input, W1, Y1);
          Forward (Y1, W2, Y2);
          Error (Correlation_Array (I).Output, Y2, E2, D2);
@@ -74,12 +126,9 @@ begin
          Put ("|");
          Put (D2, 3, 16, 0);
          New_Line;
-
-         Backpropagate (W2, D2, Y1, D1);
-         Adjust (0.06, 0.45, 0.000, Correlation_Array (I).Input, D1, W1, M1);
-         Adjust (0.06, 0.45, 0.000, Y1, D2, W2, M2);
-
       end loop;
+
+
       Put (W1, 3, 2, 0);
       New_Line;
       Put (W2, 3, 2, 0);

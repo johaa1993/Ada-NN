@@ -5,5 +5,6 @@ del /s /q "*.exe"
 gprbuild -Pmain.gpr -Xmode=release
 
 cd bin
+::main_test.exe
 main.exe
 pause
